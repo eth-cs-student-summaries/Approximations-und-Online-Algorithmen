@@ -1,17 +1,43 @@
-\section{Das Paging-Problem}
+\section{Einführung und das Paging-Problem}
 
 \begin{takeaway}
     \item Online-Problem, Online-Algorithmus, kompetitiver Faktor
+    \item Skirental-Problem
     \item Paging-Problem
 \end{takeaway}
 
 \paragraph{Motivation}
-Probleme lösen ohne vollständige Informationen zu haben (die für eine optimale Lösung relevant sind).
+Probleme lösen und Entscheidungen fällen ohne alle für eine optimale Lösung relevanten Informationen zu haben.
 Stattdessen werden die Informationen stückweise zur Laufzeit bekannt.
+
+\paragraph{Beispiel: Skirental-Problem}
+Unendlich langer Urlaub, nur an schönen Tagen Ski fahren.
+Skier mieten für 1 CHF pro Tag, oder kaufen für $k$ CHF.
+Erst am Tag selbst wird bekannt ob ein Tag schön ist.
+
+Optimale Lösung: Sei $s$ die Anzahl schöner Tag.
+Miete bei $s < k$, kaufe bei $s > k$, bei $s=k$ egal.
+
+Problem: $s$ nicht bekannt, erst am Tag selber wird bekannt ob ein Tag schön ist.
+
+\begin{table}[h]
+    \begin{tabular}{l|l|c}
+        Szenario & Worst Case & Approximationsgüte \\ \hline
+        An Tag 1 kaufen & Ab Tag 2 schlechtes Wetter & $\frac{k}{1}$ \\
+        Immer mieten & An $x >> k$ Tagen schönes Wetter & $\frac{x}{k}$ \\
+        An $k-1$ Tagen mieten, dann kaufen & Ab Tag $k+1$ schlechtes Wetter & $\frac{2k-1}{k} = 2-\frac{1}{k}$
+    \end{tabular}
+\end{table}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.3\textwidth]{images/skirental.png}
+    \caption{Skirental Szenarios}
+\end{figure}
 
 \paragraph{Online-Problem}
 Ein \emph{Online-Minimierungsproblem} ist $\Pi = (I, O, cost, \min)$.
-Eine Eingabe $I = (x_1, ..., x_n) \in \mathcal{I}$ ist eine Folge von \emph{Anfragen}.
+Eine Eingabe $I = (x_1, ..., x_n) \in \mathcal{I}$ ist eine Folge von \emph{Anfragen},
+jeweils für \emph{Zeitschritt} $i$.
 Eine akzeptierte Lösung $O = (y_1, ..., y_n)$ ist eine Folge von \emph{Antworten}.
 
 Beim analogen Maximierungsproblem spricht man statt von $cost(I, O)$ oft vom \emph{Gewinn} $gain(I,O)$.
@@ -33,17 +59,34 @@ für ein Minimierungsproblem und $\alpha$ konstant.
 $Opt$ ist ein optimaler Offline-Algorithmus, d.h. mit vollständiger Information.
 
 Das kleinste $c$ für das dies gilt heisst \emph{kompetitiver Faktor}. \\
-Für $\alpha = 0$ heisst $\A$ \emph{strikt-c-kompetitiv}. \\
-Falls $\A$ strikt-1-kompetitiv ist ($\alpha = 0, c = 1$) so heisst er \emph{optimal}.
+$A$ heisst \emph{strikt c-kompetitiv} falls $\alpha = 0$. \\
+$\A$ heisst \emph{optimal} falls er strikt 1-kompetitiv ist ($\alpha = 0, c = 1$).
 
-Ein Online-Algorithmus heisst \emph{kompetitiv} wenn sein kompetititver Faktor nicht von der
-Länge der Eingabe abhängt.
-Wir sprechen dabei von \emph{kompetitiver Analyse}.
+Wir sprechen hierbei von \emph{kompetitiver Analyse}.
 Der kompetitiver Faktor ist vergleichbar mit der Approximationsgüte von Approximationsalgorithmen.
 
+Ein Online-Algorithmus heisst \emph{kompetitiv} wenn sein kompetititver Faktor nicht von der
+Länge der Eingabe abhängt (d.h. es keine Startkosten gibt die amortisiert werden müssen).
 Die Konstante $\alpha$ ist wichtig da sie erlaubt auf kurze Eingaben schlecht zu sein
 (und erst auf lange besser zu werden).
 \footnote{Warum brauchen wir bei der Approximationsgüte keine vergleichbare Konstante?}
+
+\paragraph{Untere Schranken beweisen}
+Für einen strikt kompetititven Algorithmus:
+Finde eine Instanz $I$ mit $\frac{\A(I)}{Opt(I)} > c$ $\implies$ \underline{nicht} strikt-kompetitiv.
+
+Für einen nicht-strikt kompetititven Algorithmus:
+Finde eine unendliche Folge $I_1, I_2, ...$ von Instanzen so dass $\frac{\A(I_i)}{Opt(I_i)} > c$
+und $Opt(I_i) \overset{i \rightarrow \infty}{\longrightarrow} \infty $.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.2\textwidth]{images/strikt-kompetitiv.png}
+    \caption{$Opt$ in schwarz. $\A$ in orange, 1-kompetitiv und strikt-10-kompetitiv.}
+\end{figure}
+
+
+\subsection{Das Paging-Problem}
 
 \paragraph{Paging}
 \begin{itemize}
