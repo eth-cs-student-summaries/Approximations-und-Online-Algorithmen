@@ -1,0 +1,92 @@
+\section{Das Paging-Problem}
+
+\begin{takeaway}
+    \item Online-Problem, Online-Algorithmus, kompetitiver Faktor
+    \item Paging-Problem
+\end{takeaway}
+
+\paragraph{Motivation}
+Probleme lösen ohne vollständige Informationen zu haben (die für eine optimale Lösung relevant sind).
+Stattdessen werden die Informationen stückweise zur Laufzeit bekannt.
+
+\paragraph{Online-Problem}
+Ein \emph{Online-Minimierungsproblem} ist $\Pi = (I, O, cost, \min)$.
+Eine Eingabe $I = (x_1, ..., x_n) \in \mathcal{I}$ ist eine Folge von \emph{Anfragen}.
+Eine akzeptierte Lösung $O = (y_1, ..., y_n)$ ist eine Folge von \emph{Antworten}.
+
+Beim analogen Maximierungsproblem spricht man statt von $cost(I, O)$ oft vom \emph{Gewinn} $gain(I,O)$.
+
+\paragraph{Online-Algorithmus}
+Sei $\Pi$ ein Online-Optimierungsproblem.
+Ein \emph{Online-Algorithmus} $\A$ berechnet die Ausgabe $\A(I) = (y_1, ..., y_n) $
+wobei $y_i$ nur von $(x_1, ..., x_i)$ abhängt.
+$\A(I)$ ist eine zulässig Lösung für $I$.
+
+\paragraph{Kompetitive Faktor}
+(aka. competitive ratio, Wettbewerbsgüte, kompetitive Güte) \\
+Ein Online-Algorithmus $\A$ ist \emph{c-kompetitiv} falls gilt:
+\begin{align*}
+\exists \alpha \geq 0 \quad \forall I \cl \quad cost(\A(I)) & \leq c \cdot cost(Opt(I)) + \alpha \\
+\dfrac{cost(\A(I))}{cost(Opt(I))} + \alpha' & \leq c
+\end{align*}
+für ein Minimierungsproblem und $\alpha$ konstant.
+$Opt$ ist ein optimaler Offline-Algorithmus, d.h. mit vollständiger Information.
+
+Das kleinste $c$ für das dies gilt heisst \emph{kompetitiver Faktor}. \\
+Für $\alpha = 0$ heisst $\A$ \emph{strikt-c-kompetitiv}. \\
+Falls $\A$ strikt-1-kompetitiv ist ($\alpha = 0, c = 1$) so heisst er \emph{optimal}.
+
+Ein Online-Algorithmus heisst \emph{kompetitiv} wenn sein kompetititver Faktor nicht von der
+Länge der Eingabe abhängt.
+Wir sprechen dabei von \emph{kompetitiver Analyse}.
+Der kompetitiver Faktor ist vergleichbar mit der Approximationsgüte von Approximationsalgorithmen.
+
+Die Konstante $\alpha$ ist wichtig da sie erlaubt auf kurze Eingaben schlecht zu sein
+(und erst auf lange besser zu werden).
+\footnote{Warum brauchen wir bei der Approximationsgüte keine vergleichbare Konstante?}
+
+\paragraph{Paging}
+\begin{itemize}
+    \item Eingabe: $ I = (x_1, ..., x_n)$ mit Speicher-Indizes $x_i \in \N$
+    \item Hauptspeicher mit $m$ Seiten: $ (s_1, ..., s_m) $
+    \item Cache-Speicher mit $k$ Seiten: $ B = (s_{j_1}, ..., s_{j_k}) $, initialisiert mit $ (s_1, ..., s_k) $
+        \footnote{Der Vorsprung eines selbstgewählten Startinhalts kann in $\alpha$ versteckt werden.}
+    \item Zeitschritt $i$:
+    \begin{itemize}
+        \item Index $x_i$ wird angefragt
+        \item Falls $x_i$ im Cache (d.h. $s_{x_i} \in B$): return $y_i=0$
+        \item Andernfalls: return $y_i=j$, und setze $B = B \backslash  \{s_j\} \cup \{s_{x_i}\} $,
+            d.h. lösche Seite $s_j$ aus dem Cache.
+            \footnote{Zusätzliches, proaktives Entfernen bringt keinen Vorteil.}
+    \end{itemize}
+    \item $ cost(\A(I)) := \vert \{ i \st y_i > 0 \} \vert $
+    \item goal := min
+\end{itemize}
+
+Strategien bei \emph{Seitenfehlern (page faults)} zum \emph{Verdrängen} von Seiten:
+First-in-First-Out (FIFO, wie eine Queue),
+Last-in-First-Out (LIFO, wie ein Stack),
+Least-Recently-Used (LRU),
+Longest-Forward-Distance (LFD, offline-only!).
+
+\paragraph{Satz}
+Ein Online-Algorithmus für Paging der FIFO nutzt ist strikt-k-kompetitiv.
+
+\underline{Beweis:}
+Gruppiere Zeitschritte in \emph{Phasen}.
+Phase 1 endet nach dem ersten Seitenfehler.
+Phase $P \geq 2$ endet nach $1+ (P-1)k$ Seitenfehlern, d.h. alle $k$ Fehler endet eine Phase und beginnt eine neue.
+
+In Phase 1 machen $Opt$ und $Fifo$ je genau einen Fehler (warum?).
+
+Sei $s$ die Seite die den letzten Seitenfehler von Phase $P-1$ verursacht
+(d.h. sie kommt neu in den Cache, und wird dank FIFO als letztes in Phase $P$ verdrängt werden). \\
+$\implies$ Zu Beginn von Phase $P$ ist $s$ im Cache von $Opt$ \underline{und} von $Fifo$. \\
+$\implies$ Es gibt $\leq k-1$ Seiten die im Cache von $Opt$ sind, aber nicht in dem von $Fifo$. \\
+Während Phase $P$ macht $Fifo$ genau $k$ Fehler. \\
+$\implies$  Während $P$ muss $Opt$ mindestens einen Seitenfehler machen. \\
+$\implies$  $Fifo$ ist k-kompetitiv.
+
+LRU ist in der Theorie ebenfalls k-kompetitiv, in der Praxis allerdings tendenziell besser als FIFO.
+
+

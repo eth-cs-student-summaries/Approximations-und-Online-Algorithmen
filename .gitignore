@@ -3,9 +3,13 @@
 *.aux
 *.bbl
 *.blg
+*.dvi
+*.fdb_latexmk
+*.fls
 *.lof
 *.log
 *.out
+*.out.ps
 *.synctex.gz
 *.toc
 
