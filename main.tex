@@ -1,0 +1,105 @@
+\documentclass[paper=a4, parskip=half-]{scrartcl}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb} % more icons/symbols
+\usepackage{hyperref} % for hyper links
+\usepackage{graphicx}
+\usepackage{enumitem} % for enumerations a), i)
+\usepackage{tcolorbox} % for colorful boxes
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ right=20mm,
+ top=20mm,
+ bottom=30mm,
+ }
+
+
+\title{Approximations- und Online-Algorithmen}
+\author{\texttt{thgoebel@ethz.ch}}
+\date{ETH Zürich, FS 2022}
+
+% Custom commands
+\newcommand{\setzeroone}{\lbrace 0, 1 \rbrace} % => {0,1} (Notice the missing $$)
+\newcommand{\binarystring}{\setzeroone^*}
+\newcommand{\horizontaldivider}{\begin{center} \line(1,0){350} \end{center}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\bigO}{\mathcal{O}}
+\newcommand{\bigOstar}{\mathcal{O}^*}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\bn}{\text{bn}}
+\newcommand{\high}{\text{high}}
+\newcommand{\Time}{\text{time}}
+\newcommand{\tw}{\text{tw}}
+\newcommand{\Par}{\text{par}}
+\newcommand{\Pm}{\text{pm}}
+\newcommand{\st}{\; | \;} % st = such that
+\newcommand{\cl}{\; : \;} % cl = colon
+
+% Defines the box to contain the main takeaways from a section that you should be able to explain
+\newenvironment{takeaway}{
+    \begin{tcolorbox}[colback=red!5!white, colframe=red!65!white, title=Konzepte]
+    \begin{itemize}[leftmargin=1em]
+    \setlength{\itemsep}{-0.2em}
+}
+{
+    \end{itemize}
+    \end{tcolorbox}
+}
+
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle
+\vspace{5cm}
+\thispagestyle{empty}
+
+
+\begin{abstract}
+This documents is a \textbf{short} summary for the course
+\textit{Approximations- und Online-Algorithmen} at ETH Zurich.
+It is intended as a document for quick lookup, e.g. during revision,
+and as such does not replace attending the lecture, reading the slides or reading a proper book.
+
+We do not guarantee correctness or completeness, nor is this document endorsed by the lecturers.
+Feel free to point out any errata, either by mail or on
+\href{https://github.com/eth-cs-student-summaries/Approximations-und-Online-Algorithmen}{Github}.
+\end{abstract}
+
+\end{titlepage}
+
+\tableofcontents
+\newpage
+%\listoffigures
+%\listoftables
+
+%Credits: images are generally taken from the lecture slides.
+\newpage
+
+\part{Approximations-Algorithmen}
+
+\input{1-approximations-algorithmen}
+\newpage
+
+\input{2-ptas}
+\newpage
+
+\input{3-reduktionen}
+\newpage
+
+
+\part{Online-Algorithmen}
+
+\input{4-online-algorithmen}
+\newpage
+
+
+\end{document}
