@@ -5,6 +5,7 @@
     \item Skirental-Problem
     \item Paging-Problem
     \item Randomisierte Online-Algorithmen
+    \item Yaos Prinzip
 \end{takeaway}
 
 \paragraph{Motivation}
@@ -252,3 +253,82 @@ Für Paging existiert kein deterministischer Online-Algorithmus mit kompetitivem
 Mit Randomisierung können wir im Erwartungswert aber $\bigO(\log k)$ erreichen!
 D.h. asymptotisch expontentieller Speedup!
 Dies ist asymptotisch optimal für randomisierte Algorithmen (s.u.).
+
+
+\subsection{Yaos Prinzip}
+
+\paragraph{Motivation}
+Untere Schranke für kompetitiven Faktor von deterministischen OAs
+$\implies$ Untere Schranke für erwarteten kompetitiven Faktor von randomisierten OAs
+
+Wahrscheinlichkeitsverteilung über Instanzen $\Pr_{Adv}$ $\implies$ W'keitsverteilung über Algorithmen $\Pr_{Rand}$.
+
+Limitierung: konstante Anzahl von Instanzen $\I = \{I_1, ..., I_m\}$ und Algorithmen
+$strat(Rand) = \{A_1, ..., A_l\}$ (d.h. Eingabelänge $n$ begrenzt).
+
+\paragraph{Lemma 1 (1.13)}
+Sei $\Pi$ ein Optimierungsproblem, sei $\I$ eine Klasse von Instanzen.
+Sei $\Pr_{Adv}$ eine W'keitsverteilung so dass gilt:
+$$ \forall A \in strat(Rand) \cl \E_{Adv}[cost(A(\mathsf{I}))] \geq c \cdot \E_{Adv}[cost(Opt(\mathsf{I}))] $$
+Dann gilt:
+$$ \forall Rand \; \exists I \in \I \cl \E_{Rand}[cost(\mathsf{A}(I)))] \geq c \cdot cost(Opt(I)) $$
+wobei $\mathsf{A} ,\mathsf{I}$ Zufallsvariablen sind aus den Wahrscheinlichkeitsräumen $\Pr_{Rand}, \Pr_{Adv}$.
+
+\underline{Beweis:} Siehe Skript S.18f.
+
+\paragraph{Lemma 2 (1.14)}
+Seien $\Pi, \I, \Pr_{Adv}$ wie oben.
+Sei $\forall$ det. OAs $A_j$ der erwartete kompetitive Faktor $\geq c$, d.h.
+$$ \E_{Adv} \left[ \dfrac{cost(A_j(\mathsf{I}))}{cost(Opt(\mathsf{I}))} \right] \geq c $$
+
+Dann gilt:
+$\forall$ rand. OAs ist der erwartete kompetitive Faktor $\geq c$, d.h. $\exists I \in \I$ so dass
+$$ \dfrac{ \E_{Rand} [ cost(\mathsf{A}(I)) ]}{cost(Opt(I))} \geq c $$
+
+\underline{Beweis:} Siehe Skript S.20f.
+
+\paragraph{Satz (Yaos Prinzip)}
+Folgt aus Lemma 1 und 2.
+Seien $\Pi, \I, \Pr_{Adv}$ wie oben.
+Für jeden randomisierten Online-Algorithmus existiert dann eine Eingabe $I$ so dass
+$$
+\dfrac{\E_{Rand}[cost(\mathsf{A}(I))]}{cost(Opt(I))}
+    \geq \max \left\lbrace
+    \left\lbrace \min_j \dfrac{\E_{Adv}[cost(A_j(\mathsf{I}))]}{\E_{Adv}[cost(Opt(\mathsf{I}))]} \right\rbrace,
+    \left\lbrace \min_j \E_{Adv} \left[ \dfrac{cost(A_j(\mathsf{I}))}{cost(Opt(\mathsf{I}))} \right] \right\rbrace
+    \right\rbrace
+$$
+
+Anders formuliert (laut Wikipedia):
+$$ \max_{I \in \I} \E_{Rand}[cost(\mathsf{A}(I))] \geq \min_{A \in strat(Rand)} \E_{Adv}[cost(A(\mathsf{I} ))] $$
+wobei $\mathsf{A}, \mathsf{I}$ Zufallsvariablen sind.
+
+\paragraph{Spieltheoretische Interpretation}
+Yaos Minimax Prinzip. Spezialfall von Von Neumanns Minimax Theorem (in Nullsummenspielen mit
+2 Spielern und gemischten Strategien gibt es ein Gleichgewicht).
+Zero-sum game, Spieler A wählt den det. Algorithmus, Spieler B wählt die Instanz, der payoff ist $cost(A_j(I))$.
+
+Für jeden Spieler ist "zufällig wählen" eine Strategie.
+Aus Yao folgt: für eine fixe Eingabe zufällig eine Algo wählen ist nicht schlechter
+als für einen fixen Algo zufällig eine Eingabe wählen.
+
+\paragraph{Satz (Untere Schranke für randomisiertes Paging)}
+Kein randomisierter Online-Algorithmus für Paging kann einen besseren (= kleineren) erwarteten
+kompetitiven Faktor als $H_k$ erreichen.
+
+\underline{Beweis:}
+Siehe Skript S.27ff.
+
+Analog zu Paging: $k$ Cache, $k+1$ Hauptspeicher, frage zuerst $s_{k+1}$ an, danach (neu!) jede
+der nicht gerade angefragten Seiten mit Wahrscheinlichkeit $\frac{1}{k}$.
+Eine Phase endet nach $k$ Fehlern, d.h. nachdem alle $k+1$ Seiten mind. einmal angefragt wurden.
+
+Betrachte einzelne Phase. Zeige dass für alle deterministischen  $A_j$ die erwarteten Kosten circa
+\mbox{$H_k$-mal} höher sind als die von $Opt$.
+Es gilt für die Eingabe während Phase $P$:
+$$ \dfrac{\E_{Adv} [cost(A_j(P))]}{\E_{Adv} [cost(Opt(P))]} \geq \dfrac{|P|\cdot \frac{1}{k}}{1} = \dfrac{|P|}{k} $$
+
+Schätze ab (siehe Skript, siehe Coupon Collector): $\quad \E_{Adv}[\,|P|\,] = 1 + k \cdot H_k$.
+
+Wende Yaos Prinzip an:
+$$ \dfrac{\E_{Rand}[cost(\mathsf{A}(I))]}{cost(Opt(I))} \geq H_k $$
