@@ -1,0 +1,39 @@
+\section{k-Server-Problem}
+
+\begin{takeaway}
+    \item k-Server-Problem
+\end{takeaway}
+
+\paragraph{Motivation}
+Bewege Objekte in einem Raum zu bestimmten Punkten.
+Z.B. Polizisten von Dienststellen zu crime scenes.
+
+\paragraph{Metrischer Raum}
+Sei $S$ eine Menge von Punkten, sei $\dist : S \times S \mapsto \mathbb{R}$ eine Distanzfunktion.
+$\mathcal{M}(S, \dist)$ ist ein \emph{metrischer Raum} falls gilt:
+Definitheit, Symmetrie, Dreiecksungleichung.
+
+Beispiel: Euklidischer Raum. Vollständige, gewichtete, ungerichtete Graphen mit Dreiecksungleichung.
+\\
+Beobachtung: Alle Graphen mit Kastenkosten $\in \{1, 2\}$ erfüllen die Dreiecksungleichung.
+
+\paragraph{k-Server}
+Sei $\mathcal{M}(S, \dist)$ ein metrischer Raum.
+Sei $s_1, ..., s_k$ Server als Punkte in $S$.
+Sei eine Multimenge $C_i \subseteq S$ mit $|C_i|=k$ eine \emph{Konfiguration} von Servern in Zeitschritt $i$.
+\\
+Die \emph{Distanz} \footnote{Achtung Verwechslungsgefahr!}
+zwischen $C_r$ und $C_t$ sind die Kosten eines minimalen Matchings zwischen ihnen.
+
+Eine Instanz $I = (x_1, ..., x_n)$ fragt Punkte an, so dass in Zeitschritt $i$ ein Server nach $x_i$
+bewegt werden muss (falls dort noch keiner steht).
+
+Ziel: $\min \sum_i costMinMatching(C_i, C_{i+1})$
+
+\paragraph{Träge}
+Ein Online-Algorithmus für k-Server heisst \emph{träge} wenn er nur dann einen Server bewegt,
+wenn auf $x_i$ noch kein Server steht.
+Auch bewegt er pro Zeitschritt maximal einen Server.
+
+Dies erleichtert die Analyse. Gleichzeitig gilt (Satz): \\
+Jeder c-kompetitive OA für k-Server kann in einen trägen OA umgewandelt werden der auch c-kompetitiv ist.
