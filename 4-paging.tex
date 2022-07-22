@@ -60,6 +60,9 @@ Ein Online-Algorithmus $\A$ ist \emph{c-kompetitiv} falls gilt:
 für ein Minimierungsproblem und $\alpha$ konstant.
 $Opt$ ist ein optimaler Offline-Algorithmus, d.h. mit vollständiger Information.
 
+Für Maximierungsprobleme:
+$$ gain(Opt(I)) \leq c \cdot gain(\A(I)) + \alpha $$
+
 Das kleinste $c$ für das dies gilt heisst \emph{kompetitiver Faktor}. \\
 $\A$ heisst \emph{strikt c-kompetitiv} falls $\alpha = 0$. \\
 $\A$ heisst \emph{optimal} falls er strikt 1-kompetitiv ist ($\alpha = 0, c = 1$).

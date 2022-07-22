@@ -1,0 +1,104 @@
+\section{Online-Rucksackproblem}
+
+\begin{takeaway}
+    \item Online-Rucksackproblem
+    \item Ansatz: deterministisch, mit Advice, randomisiert
+\end{takeaway}
+
+\paragraph{Online-Rucksackproblem}
+Eingabe $I=(w_1, ..., w_n)$, wobei wir vereinfachen mit \mbox{Gewicht = Wert}.
+$w_i \in \R, 0 \leq w_i \leq 1$ (nicht $w_i \in \N$ wie bei Offline!).
+In jedem Zeitschritt $i$ muss $A$ entscheiden ob er $w_i$ einpacken will.
+Dies kann nicht aufgeschoben oder revidiert werden.
+
+Zulässige Lösung: Menge von Indizes $S \subseteq \{1, ..., n\}$ so dass
+$gain(A(I)) := \sum_{i \in S} w_i \leq 1$.
+\\
+Ziel: $gain(A(I))$ maximieren.
+
+
+\subsection{Deterministisch}
+
+\paragraph{Satz}
+Jeder deterministische OA für das Rucksackproblem hat einen beliebig grossen (d.h schlechten)
+kompetitiven Faktor.
+
+\underline{Beweis:}
+Schritt 1: Gegenspieler bietet Objekt $w$ mit Gewicht $\varepsilon > 0$ an.
+Schritt 2: Falls $w$ akzeptiert, biete Objekt mit Gewicht 1 an. Falls $w$ verworfen, breche ab.
+\\
+$\implies$ kompetitiver Faktor von $\frac{1}{\varepsilon}$ bzw. von
+$\frac{\varepsilon}{0}$/unendlich/undefiniert.
+
+\vspace{5mm}
+
+Trotzdem ist $Greedy$ auf bestimmte Klassen von Eingaben gut:
+
+\paragraph{Satz}
+Für jede Instanz mit Gewichten $\leq \beta$ ist $Greedy$ optimal oder erreicht einen Gewinn von $> 1-\beta$.
+
+\underline{Beweis:}
+Fallunterscheidung: Gesamtgewicht aller angebotenen Objekte $\leq 1$ (optimal), oder $> 1$ (dann
+ist in $Greedy$'s Sack nur $< \beta$ Platz leer).
+
+\paragraph{Satz}
+Für jede Instanz für die $gain(Opt(I)) \leq \frac{1}{2}$ ist, ist $Greedy$ optimal.
+
+\underline{Beweis:}
+Offensichtlich gilt $gain(Greedy(I)) \leq \frac{1}{2}$.
+Falls $gain(Greedy(I)) < gain(Opt(I))$, dann ...
+TODO
+% Laut Skript: ... muss $Greedy$ ein Objekt mit Gewicht $> \frac{1}{2}$ verworfen haben.
+% Mir ist nicht klar ob/warum dies gilt.
+% Ich würde argumentieren es kann keine weiteren Objekte geben.
+% Denn die mit >=1/2 hätte Opt direkt eingepackt,
+% und die mit >1/2 hätte Opt auch eingepackt (und dafür alle eben noch eingepackten verworfen).
+
+
+\subsection{Mit Advice}
+
+\paragraph{Satz (Triviale untere Schranke)}
+Es existiert ein optimaler OA mit Advice für das Rucksackproblem der $n$ Advice-Bits benutzt.
+
+\underline{Beweis}: Left as an exercise to the reader.
+
+\paragraph{Satz (Scharfe Schranke)}
+Jeder optimale OA mit Advice für das Rucksackproblem muss mindestens $n-1$ Advice-Bits benutzen.
+
+\underline{Beweis:}
+Konstruiere Klasse von Instanzen:
+$ I = (\frac{1}{2}, \frac{1}{4}, ... , \frac{1}{2^{n-1}}, w_b)$
+wobei $ w_b = 1 - \sum_{i=1}^{n-1} b_i 2^{-i} $ für einen beliebigen Binärstring $b$ der Länge $n-1$.
+Für $n=8$ z.B. führt $b=1101101$ zu
+$$ w_b = 1 - \left( \frac{1}{2} + \frac{1}{4} + 0 + \frac{1}{16} + \frac{1}{32} + 0 + \frac{1}{128} \right) $$
+Die eindeutige optimale Lösung hat Gewinn 1, und füllt mit den ersten $n-1$ Objekten die ``Lücken''
+von $w_b$ auf.
+
+Es gibt $2^{n-1}$ veschiedene Binärstrings der Länge $n-1$, d.h. es gibt ebenso viele Instanzen.
+Ein optimaler OA mit Advice muss alle unterscheiden können, d.h. er braucht $n-1$ Advice-Bits.
+\\
+Mit weniger Bits verhält er sich auf zwei Instanzen gleich (Schubfachprinzip),
+und kann nicht auf beide optimal sein.
+
+\paragraph{Algorithmus: KPone}
+Lese ein Advice-Bit. Es entscheidet zwischen: Greedy von Beginn an, oder Warten auf ein Objekt
+mit Gewicht $> \frac{1}{2}$ und ab dann Greedy.
+
+\paragraph{Satz}
+Der OA mit Advice $KPone$ für das Rucksackproblem ist strikt 2-kompetitiv.
+
+\underline{Beweis:}
+\\
+Fall 1: ein Objekt mit Gewicht $> \frac{1}{2}$ existiert. $KPone$ packt dieses ein,
+$\implies gain(KPone(I)) > \frac{1}{2}$.
+\\
+Fall 2: Setze $\beta = 2$ und wende obigen Satz für det. OAs an
+$\implies gain(KPone(I)) \geq 1 - \frac{1}{2} = \frac{1}{2}$ (oder optimal).
+
+Dann gilt:
+$$ \frac{gain(Opt(I))}{gain(KPone(I))} \leq \frac{1}{gain(KPone(I))} \leq \frac{1}{\frac{1}{2}} = 2 $$
+
+
+
+\subsection{Randomisiert}
+
