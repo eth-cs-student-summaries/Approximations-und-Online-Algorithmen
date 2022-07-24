@@ -2,7 +2,8 @@
 
 \begin{takeaway}
     \item Online-Rucksackproblem
-    \item Ansatz: deterministisch, mit Advice, randomisiert
+    \item Ansätze: deterministisch, mit Advice, randomisiert
+    \item Untere Schranken für den (erwarteten) kompetitiven Faktor und die Advice-Komplexität
 \end{takeaway}
 
 \paragraph{Online-Rucksackproblem}
@@ -42,7 +43,7 @@ Fallunterscheidung: Gesamtgewicht aller angebotenen Objekte $\leq 1$ (optimal), 
 ist in $Greedy$'s Sack nur $< \beta$ Platz leer).
 
 \paragraph{Satz}
-Für jede Instanz für die $gain(Opt(I)) \leq \frac{1}{2}$ ist, ist $Greedy$ optimal.
+Für jede Instanz mit $gain(Opt(I)) \leq \frac{1}{2}$ ist $Greedy$ optimal.
 
 \underline{Beweis:}
 Offensichtlich gilt $gain(Greedy(I)) \leq \frac{1}{2}$.
@@ -98,7 +99,63 @@ $\implies gain(KPone(I)) \geq 1 - \frac{1}{2} = \frac{1}{2}$ (oder optimal).
 Dann gilt:
 $$ \frac{gain(Opt(I))}{gain(KPone(I))} \leq \frac{1}{gain(KPone(I))} \leq \frac{1}{\frac{1}{2}} = 2 $$
 
+\paragraph{Fazit}
+Mit $n-1$ Advice-Bits sind wir optimal, mit 1 Advice-Bit bereits 2-kompetitiv.
+Konstant mehr Bits helfen nicht.
+
+Untere Schranke: kein OA mit $< \log_2 (n-1)$ Advice-Bits kann besser als $(2-\varepsilon)$-kompetitiv sein.
+\footnote{Beweis ähnlich wie oben, via Konstruktion einer Klasse von Instanzen und Schubfachprinzip.}
+\\
+Obere Schranke: mit $\bigO(\log n)$ Advice-Bits kommen wir beliebig nah an die optimale Lösung heran.
 
 
 \subsection{Randomisiert}
 
+\paragraph{Motivation}
+Ein Advice-Bit ist mächtig. Wie mächtig ist ein Zufallsbit?
+
+\paragraph{Algorithmus: RKPone'}
+Wie KPone, aber statt Advice-Bit nimmt er ein Zufallsbit.
+
+\paragraph{Satz}
+Der Barely-Random-Algorithmus $RKPone'$ ist strikt 4-kompetitiv im Erwartungswert.
+Diese Schranke ist dicht (d.h. er kann nicht besser sein).
+
+\paragraph{Algorithmus: RKPone}
+Wähle u.a.r. einen deterministischen OA aus $strat(RKPone) = \{ Greedy_1, Greedy_2 \}$.
+\\
+$Greedy_1$ ist eine normale Greedy-Strategie.
+\\
+$Greedy_2$ simuliert $Greedy_1$, akzeptiert aber nichts. Sobald ein Objekt nicht mehr in $Greedy_1$s
+Rucksack passt, akzeptiert $Greedy_2$ dieses und folgt von dann an einer Greedy-Strategie.
+
+\paragraph{Satz}
+Der Barely-Random-Algorithmus $RKPone$ ist strikt 2-kompetitiv im Erwartungswert.
+
+\underline{Beweis:}
+
+Fall 1: $\sum w_i \leq 1$ $\implies$ $gain(Greedy_1(I)) = gain(Opt(I)) \leq 1$ und $gain(Greedy_2(I))=0$ \\
+$\implies$ erwartete Gewinn = $\frac{1}{2} \cdot gain(Opt(I))$
+
+Fall 2: $\sum w_i \geq 1$. Dann ist der erwartete Gewinn:
+$$ \frac{1}{2} gain(Greedy_1(I)) + \frac{1}{2} gain(Greedy_2(I))
+= \frac{1}{2} \left( gain(Greedy_1(I)) + gain(Greedy_2(I)) \right) \geq \frac{1}{2} $$
+wobei wir verwenden dass $gain(Greedy_1(I)) + gain(Greedy_2(I)) \geq 1$
+(da $Greedy_2$ mindestens das Objekt akzeptiert mit dem $Greedy_1$ die Rucksackkapazität überschritten hätte).
+
+\paragraph{Satz (Untere Schranke)}
+Kein randomisierter OA für das Rucksackproblem ist besser als strikt 2-kompetitiv im Erwartungswert.
+
+Intuitiv: ein Advice-Bit ist genauso mächtig wie beliebig viel Randomisierung.
+
+\underline{Beweis:}
+Betrachte die Klasse von Instanzen $\mathcal{I} = \{ I_1=(\varepsilon ), I_2=(\varepsilon , 1) \} $.
+Sei $Rand$ ein randomisierter OA der $x_1$ mit Wahrscheinlichkeit $p$ akzeptiert.
+\footnote{$p>0$ muss gelten da $Rand$ sonst auf $I_1$ einen erwarteten Gewinn von 0 hat.}
+
+Für den kompetitive Faktor gilt:
+$$
+KF(I_1) = \frac{\varepsilon}{p \cdot \varepsilon + (1-p) \cdot 0} = \frac{1}{p} \qquad ; \qquad
+KF(I_2) = \frac{1}{p \cdot \varepsilon + (1-p) \cdot 1} $$
+Durch Gleichsetzen folgt $ p = \frac{1}{2 - \varepsilon} $, und durch Rückeinsetzen in $KF$ folgt
+dass der kompetitive Faktor $\geq 2 - \varepsilon$ ist.
