@@ -10,6 +10,8 @@
 Bewege Objekte in einem Raum zu bestimmten Punkten.
 Z.B. Polizisten von Dienststellen zu crime scenes, oder Taxis zu Kunden.
 
+``Heiliger Gral'' der Online-Algorithmen, wie TSP für Approximations-Algorithmen oder SAT für NP.
+
 \paragraph{Metrischer Raum}
 Sei $S$ eine Menge von Punkten, sei $\dist : S \times S \mapsto \mathbb{R}$ eine Distanzfunktion.
 $\mathcal{M}(S, \dist)$ ist ein \emph{metrischer Raum} falls gilt:
@@ -33,7 +35,7 @@ bewegt werden muss (falls dort noch keiner steht).
 Ziel: $\min \sum_i costMinMatching(C_i, C_{i+1})$
 
 \paragraph{Träge}
-Ein Online-Algorithmus für k-Server heisst \emph{träge} wenn er nur dann einen Server bewegt,
+Ein Online-Algorithmus für k-Server heisst \emph{träge (lazy)} wenn er nur dann einen Server bewegt,
 wenn auf $x_i$ noch kein Server steht.
 Auch bewegt er pro Zeitschritt maximal einen Server.
 
@@ -55,7 +57,9 @@ Können wir für k-Server auch einen Algo konstruieren?
     \item Es existiert ein k-kompetitiver deterministischer OA für k-Server.
     \item Es existiert ein im Erwartungswert $\Theta(\log k)$-kompetitiver randomisierter OA für k-Server.
 \end{itemize}
+D.h. die untere Schranke ist erreichbar.
 Wenn dies wahr ist, dann ist k-Server genauso schwer wie Paging!
+Aktueller Stand: $2k-1$.
 
 \paragraph{Greedy-Algorithmus}
 Bewege immer den Server der am nähesten dran ist.
@@ -188,17 +192,21 @@ Der Zug von $DC$ verändert $\Phi$ um:
 \begin{itemize}
     \item[Fall 1:] $x_i$ ist ``ganz aussen''. OBdA wird $s_{rechts}$ nach links verschoben.
         Der zweite Summand vergrössert das Potential um $\leq (k-1) \cdot cost(DC(x_i))$.
+        \\
         OBdA existiert ein minimales Matching das $s$ (von $Opt$ bereits nach $x_i$ bewegt)
         und $s_{rechts}$ matched -- siehe Fallunterscheidung).
         D.h. die Kosten von $k \cdot M_{\min}$ verringern sich um $k \cdot cost(DC(x_i))$.
-        $\implies$ insgesamt gilt $(\star)$.
+        \\
+        $\implies$ insgesamt gilt $(\star)$
     \item[Fall 2:] $x_i$ ist zwischen $s_{links}$ und $s_{rechts}$.
         Der zweite Summand wird um $cost(DC(x_i))$ kleiner (da sich $s_{links}, s_{rechts}$ näher kommen).
         OBdA sind vor dem Zug von $DC$ $s$ und $s_{links}$ (oder $s$ und $s_{rechts}$) gematched.
         Dies verringert die Kosten von $M_{\min}$ um $cost(DC(x_i))/2$.
+        \\
         Der andere wird mit einem $s'''$ von $Opt$ gematched.
         Hier erhöhen sich die Kosten um $\leq cost(DC(x_i))/2$.
         D.h. der erste Summand bleibt gleich oder wird kleiner.
-        $\implies$ insgesamt gilt $(\star)$.
+        \\
+        $\implies$ insgesamt gilt $(\star)$
 \end{itemize}
-$\implies$ Voraussetung vom Satz erfüllt $\implies$ $DC$ ist k-kompetitiv.
+$\implies$ Bedingung 1 + 2 vom Satz erfüllt $\implies$ $DC$ ist k-kompetitiv.
