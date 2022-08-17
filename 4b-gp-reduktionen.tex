@@ -10,17 +10,16 @@ Falls Lösung in der Lücke: keine Aussage.
 Siehe \emph{Promise-Problem}: Es ist garantiert dass die Eingabe nicht $Opt \in [s, c)$ hat.
 
 \underline{Fallunterscheidung:} Sei $y$ die berechenbar Lösung.
-TODO drawings
 \begin{itemize}
     \item Fall 1: $y \geq c$ (oberhalb):
-        \includegraphics[width=0.2\textwidth]{images/ap-reduktion-beispiel.png}
+        \includegraphics[width=0.2\textwidth]{images/lueckenproblem-fall-1.jpg}
         $\implies$ $Opt$ muss oberhalb liegen.
     \item Fall 2: $y < s$ (unterhalb):
-        \includegraphics[width=0.2\textwidth]{images/ap-reduktion-beispiel.png}
+        \includegraphics[width=0.2\textwidth]{images/lueckenproblem-fall-2.jpg}
         $\implies$ $Opt$ muss unterhalb liegen. \\
         Annahme: Approximation ist gut genug, so dass sie nicht über die Lücke geht.
     \item Fall 3: $y \geq s$ (innerhalb):
-        \includegraphics[width=0.2\textwidth]{images/ap-reduktion-beispiel.png}
+        \includegraphics[width=0.2\textwidth]{images/lueckenproblem-fall-3.jpg}
         $\implies$ $Opt$ muss oberhalb liegen (kann nicht in der Lücke liegen).
 \end{itemize}
 In allen Fällen ist das Lückenproblem entscheidbar.
@@ -33,6 +32,12 @@ In allen Fällen ist das Lückenproblem entscheidbar.
 %
 Beispiel:
 Max-SAT ist selbst bei Lücke $ [s,c) = \left[ \frac{7}{8}, 1 \right) $ noch schwer.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/schwellwertproblem-lueckenproblem.jpg}
+    \caption{Schwellwertproblem und Lückenproblem}
+\end{figure}
 
 \paragraph{Definition Lückenproblem GAP}
 Sei $s, c\in \R^+, 0 \leq s \leq c \leq 1$.\footnote{Wir normalisieren auf $[0,1]$, siehe auch $|x|$ unten.}
@@ -141,11 +146,15 @@ Fallunterscheidung:
 \underline{Implikation:}
 
 Jede konstante $c$-Approximation lässt sich iterativ verbessern (von $c$ auf $\sqrt{c}$, für $c>1$). \\
-$\implies$ \emph{entweder} Max-CLIQUE $\in$ PTAS \emph{oder} Max-CLIQUE $\noindent$ APX
+$\implies$ \emph{entweder} Max-CLIQUE $\in$ PTAS \emph{oder} Max-CLIQUE $\notin$ APX
 (= nicht konstant approximierbar).
 
 Max-SAT $\leq_{AP}$ Max-CLIQUE (siehe \autoref{sec:ap-reduktionen}) und Max-SAT ist APX-vollständig
 \footnote{Nicht in Vorlesung bewiesen} \\
 $\implies$ Max-CLIQUE $\notin$ APX
 
-TODO Beispiel Graphik
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/gp-reduktion-max-clique.jpg}
+    \caption{GP-Reduktion Max-CLIQUE}
+\end{figure}
