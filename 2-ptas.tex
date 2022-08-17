@@ -1,0 +1,63 @@
+\section{Approximationsschemata}
+
+\begin{takeaway}
+    \item PTAS, FPTAS
+    \item SKP: 2-Approximation (Greedy), PTAS-SKP
+    \item KP: DPKP, FPTAS
+\end{takeaway}
+
+\paragraph{Definition PTAS und FPTAS}
+Eingabe $(I, \varepsilon)$.
+PTAS: Laufzeit ist polynomiell in $|I|$ und beliebig in $\varepsilon^{-1}$.
+FPTAS: Laufzeit ist polynomiell in $|I|$ \underline{und} in $\varepsilon^{-1}$.
+Approximationsgüte $(1+\varepsilon)$.
+Siehe [ASP].
+
+\paragraph{Einfaches Rucksackproblem (Simple Knapsack Problem SKP)}
+Gewichte = Kosten. NP-schwer.
+Siehe [ASP].
+
+\paragraph{Greedy-SKP}
+2-Approximation. Absteigend sortieren, $\bigO(n \log n)$.
+Siehe [ASP].
+
+\paragraph{PTAS-SKP}
+$(1+\varepsilon)$-Approximation.
+$k \gets \lceil \frac{1}{\varepsilon} \rceil$.
+Optimale Lösung für alle $\bigO(n^k)$ Teilmengen der Grösse $k$. Dann greedy erweitern in je $\bigO(n)$.
+Siehe [ASP].
+
+\paragraph{Allgemeines Rucksackproblem (KP)}
+Eingabe $I = (w_1, ..., w_n, c_1, ..., c_n, b)$.
+Siehe [ASP].
+
+\paragraph{Exakter Algorithmus für KP (DPKP)}
+Dynamische Programmierung. Siehe [ASP].
+
+Sei $I_i$ die Teilinstanz der ersten $i$ Elemente.
+Berechne Tripel:
+$$ (k, W_{i,k}, T_{i,k}) \in (0, ..., \sum c_j) \times (0, ..., b) \times Pot({1, ..., n})
+    = \text{Nutzen} \times \text{Gewicht} \times \text{Teilmenge} $$
+wobei $W_{i,k}$ für Nutzen $k$ minimal ist und $W_{i,k} \leq b$.
+Sei $TRIPLE_i$ die Menge alle Tripel für $I_i$.
+
+Iteriere über alle $i$, und alle $TRIPLE_i$, und erweitere die Tripel um das i-te Element.
+Gebe das grösste $k$ aus allen gefundenen Tripeln aus.
+
+Laufzeit: $\bigO(|I| \cdot \sum c_j) = \bigO(n \cdot n \cdot \text{max-int}(I)) \implies$ pseudopolynomiell
+
+Falls $b \ll \sum c_j$: speichere Tripel für jedes mögliche Gewicht den maximalen Nutzen
+(anstatt für jeden möglichen Nutzen das minimale Gewicht).
+
+\paragraph{FPTAS-KP}
+Siehe [ASP].
+
+\begin{enumerate}
+    \item $t \gets \frac{\varepsilon \cdot c_{max}}{(1+\varepsilon)\cdot n}$
+    \item Runde $c_i' \gets \lfloor \frac{c_i}{t} \rfloor$
+    \item DPKP auf gerundete Instanz
+\end{enumerate}
+Korrektheit: Lösung bleibt zulässig.
+Approximationsgüte: messy, siehe Buch/[ASP].\\
+Laufzeit: $\bigO (n + n \cdot \sum c_j') = \bigO (\frac{1}{\varepsilon}n^3)$
+$\implies$ poly($n, \varepsilon^{-1}$)

@@ -97,8 +97,8 @@ Beweis per Widerspruch:
 
 Nehme an es gelte für ein $x_j$:
 $$ weight_C(x_j) > \frac{1}{l-j+1} \iff |D_{C,i}| = \frac{1}{weight_C(x_j)} < l-j+1 $$
-D.h. der Algorithmus überdeckt strikt weniger als $l-j+1$ mit $S_i$ (als er $x_j$ neu überdeckt).
-Mit $S$ hätte er aber genau $l-j+1$ (d.h. mehr) Elemente überdecken können.
+D.h. der Algorithmus überdeckt $< l-j+1$ neue Elemente mit $S_i$ (mit welchem er auch $x_j$ neu überdeckt).
+Mit $S$ hätte er aber $= l-j+1$ neue Elemente überdecken können.
 Widerspruch zu Greedy!
 
 Nun gilt $\forall S \in \mathcal{F}$:
@@ -127,7 +127,7 @@ $\implies$ Min-SCP $\in$ LOGAPX. Greedy ist optimal für Min-SCP!
 \paragraph{Weighted-VCP (WVCP)} \mbox{} \\
 Eingabe: $ (G, c)$ wobei $G=(V,E), \; c : V \mapsto \N^+ $ \\
 Zulässige Lösungen: jedes vertex cover $C$ von $G$ \\
-Kosten: $cost(C) = \sum_{x \in C} c(x)$ \\
+Kosten: $cost(C) = \sum_{v \in C} c(v)$ \\
 Ziel: min
 
 \paragraph{Lineare Programmierung}
