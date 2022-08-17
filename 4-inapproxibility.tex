@@ -1,10 +1,44 @@
 \section{Nichtapproximimierbarkeit}
 
+\begin{takeaway}
+    \item Pseudopolynomielle Algorithmen, Stark NP-schwer
+\end{takeaway}
+
 \paragraph{Nichtapproximimierbarkeit}
-Motivation: zeige dass ein Problem \emph{nicht} in Polynomzeit approximierbar ist.
-Methode:
+Motivation: zeige untere Schranken für die Polynomzeit-Approximier-barkeit von Problemen.
+Methoden:
 \begin{itemize}
-    \item Reduktion auf NP-schwere Probleme
-    \item Approximationserhaltende Reduktion (AP-Reduktion)
+    \item Reduktion von NP-schweren Entscheidungsproblemen
+    \item Approximationserhaltende Reduktionen (AP-Reduktionen)
     \item Anwendung PCP-Theorem
 \end{itemize}
+
+
+\subsection{Reduktion von NP-schweren Entscheidungsproblemen}
+
+\paragraph{Theorem}
+Falls $P \neq NP$, so existiert kein polynomieller Approximationsalgorithmus für das TSP
+mit Approximationsgüte $p(n)$ für ein Polynom $p$.
+$\implies$ TSP $\notin$ POLYAPX.
+
+\underline{Beweis:}
+Siehe [ASP]. Reduktion vom Hamiltonkreisproblem HCP (NP-schwer) auf die $2^n$-Approximation von TSP.
+Polynomzeit-Transformation.
+$$ HCP = \{ G=(V,E) \st G \text{ enthält einen Hamiltonkreis} \} $$
+Hamiltonkreis: jeder Knoten wird genau einmal besucht.
+
+\paragraph{Zahlproblem (integer value problem IVP)}
+Siehe [ASP].
+
+\paragraph{Pseudopolynomieller Algorithmen}
+$\text{time}_A(x) \in \bigO \left( \text{poly}( |I|, \text{max-int}(I) ) \right)$.
+Siehe [ASP].
+
+\paragraph{Stark NP-schwer}
+Zahlproblem U heisst \emph{stark NP-schwer} falls das $p$-beschränkte Teilproblem%
+\footnote{D.h. $\text{max-int}(I) \leq p(|I|)$.} NP-schwer ist, für ein Polynom $p$.
+Siehe [ASP].
+
+\paragraph{Theorem}
+U stark NP-schwer $\implies$ $\not \exists$ pseudopolynomieller Algorithmus für U\\
+Siehe [ASP].
