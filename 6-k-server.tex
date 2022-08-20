@@ -2,8 +2,8 @@
 
 \begin{takeaway}
     \item k-Server-Problem
-    \item Potentialfunktionen, amortisierte Kosten
-    \item Greedy, Double Coverage
+    \item Potentialfunktionen, amortisierte Kosten (Teleskopsumme)
+    \item Greedy, Double Coverage (Alternating Moves)
 \end{takeaway}
 
 \paragraph{Motivation}
@@ -123,7 +123,8 @@ eine Konstante beschränkt ist.
 \underline{Beweis:}
 Siehe Skript S.48. Kurz:
 $$ cost(A(I)) = \sum_{i=1}^n cost(A(x_i)) = \dots \leq c \cdot cost(Opt(I)) + \beta $$
-Amortisierte Kosten einsetzen, dann Potentiale auscanceln. Dann $\alpha := \beta$ setzen.
+Amortisierte Kosten einsetzen, dann Potentiale auscanceln (\emph{Teleskopsumme}).
+Dann $\alpha := \beta$ setzen.
 
 \subsection{k-Server auf der Linie}
 
@@ -183,7 +184,7 @@ Zeige nun dass $\forall i$ gilt $(\star)$:
 $ \Phi(x_i) - \Phi(x_{i-1}) \leq k \cdot cost(Opt(x_i)) - cost (DC(x_i)) $ (Bedingung 2).
 \\
 Schätze dazu ab wie sich das Potential verändert (durch die Änderung der Konfiguration)
-wenn erst $Opt$ und dann $DC$ einen Zug machen.
+wenn erst $Opt$ und dann $DC$ einen Zug machen (\emph{Alternating Moves}).
 
 Der Zug von $Opt$ vergrössert $\Phi$ um $\leq k \cdot cost(Opt(x_i))$
 (maximal ein Server wird um $cost(Opt(x_i))$ bewegt, nur $k \cdot M_{\min}$ ist affected).

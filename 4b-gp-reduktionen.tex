@@ -143,14 +143,19 @@ Fallunterscheidung:
         Opt_{Max-CLIQUE}(G \times G) \geq (1-\varepsilon)^2 \cdot |G|^2 = (1-\varepsilon)^2 \cdot |G \times G|$
 \end{itemize}
 
+\underline{Intution:}
+Durch das Quadrieren werden beide Werte kleiner und gehen gegen 0.
+$\implies$  Die Lücke wird kleiner. $\implies$  Die Approximation wird besser.
+
 \underline{Implikation:}
 
-Jede konstante $c$-Approximation lässt sich iterativ verbessern (von $c$ auf $\sqrt{c}$, für $c>1$). \\
+Falls es eine konstante $c$-Approximation gibt, dann lässt sie sich iterativ verbessern
+(von $c$ auf $\sqrt{c}$, für $c>1$), wodurch ein PTAS entsteht. \\
 $\implies$ \emph{entweder} Max-CLIQUE $\in$ PTAS \emph{oder} Max-CLIQUE $\notin$ APX
 (= nicht konstant approximierbar).
 
 Max-SAT $\leq_{AP}$ Max-CLIQUE (siehe \autoref{sec:ap-reduktionen}) und Max-SAT ist APX-vollständig
-\footnote{Nicht in Vorlesung bewiesen} \\
+\footnote{Nicht in Vorlesung bewiesen.} \\
 $\implies$ Max-CLIQUE $\notin$ APX
 
 \begin{figure}[h]

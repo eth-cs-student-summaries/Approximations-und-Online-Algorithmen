@@ -8,7 +8,7 @@ $U = (L, M, cost, goal) \in NPO$ falls folgende Operationen polynomiell sind:
 (1) Lesen der Eingabe/Ausgabe, (2) Verifizieren der Eingabe/Ausgabe auf Zulässigkeit,
 (3) Berechnen der Kosten einer Lösung.
 
-\paragraph{PO} Falls eine optimale Lösung in Polynomzeit berechen bar ist. $PO \subseteq NPO$.
+\paragraph{PO} Falls eine optimale Lösung in Polynomzeit berechenbar ist. $PO \subseteq NPO$.
 
 \paragraph{Schwellwertsprache}
 Sprache von Entscheidungsproblemen.
@@ -26,10 +26,10 @@ NP-Vollständigkeit macht keinen Sinn für Optimierungsprobleme.
     Klasse & Enthält Probleme falls... & Beispiele \\ \hline
     PO & & \\
     FPTAS & $\exists$ ein FPTAS & KP \\
-    PTAS & $\exists$ ein PTAS & SKP, Euklidisches TSP \\
-    APX & $\exists$ Approximationsalg. mit konstanter Güte & Min-VCP, Max-CUT, $\Delta$-TSP \\
-    LOGAPX & $\exists$ Approximationsalg. mit logarithmischer Güte & Min-SCP \\
-    POLYAPX & $\exists$ Approximationsalg. mit polynomieller Güte & Max-CLIQUE \\
+    PTAS & $\exists$ ein PTAS & SKP, Euklidisches TSP, Makespan-Scheduling \\
+    APX & $\exists$ Approx.-Alg. mit konstanter Güte & Min-VCP, Max-CUT, $\Delta$-TSP \\
+    LOGAPX & $\exists$ Approx.-Alg. mit logarithmischer Güte & Min-SCP \\
+    POLYAPX & $\exists$ Approx.-Alg. mit polynomieller Güte & Max-CLIQUE \\
     NPO &  & TSP \\
     \end{tabular}
 \end{table}

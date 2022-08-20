@@ -2,7 +2,7 @@
 
 \begin{takeaway}
     \item PTAS, FPTAS
-    \item SKP: 2-Approximation (Greedy), PTAS-SKP
+    \item SKP: 2-Approximation (Greedy), PTAS-SKP (Durchschnittsargument)
     \item KP: DPKP, FPTAS
 \end{takeaway}
 
@@ -25,6 +25,7 @@ Siehe [ASP].
 $(1+\varepsilon)$-Approximation.
 $k \gets \lceil \frac{1}{\varepsilon} \rceil$.
 Optimale Lösung für alle $\bigO(n^k)$ Teilmengen der Grösse $k$. Dann greedy erweitern in je $\bigO(n)$.
+Kosten mit \emph{Durchschnittsargument}: $w_q \leq \frac{w_1 + ... + w_k + w_q}{k+1} \leq \frac{cost(T_{Opt})}{k+1}$.
 Siehe [ASP].
 
 \paragraph{Allgemeines Rucksackproblem (KP)}
